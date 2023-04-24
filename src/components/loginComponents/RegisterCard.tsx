@@ -32,7 +32,7 @@ const RegisterCard = () => {
         {showLoginForm ? <LoginForm /> : <RegisterForm />}
       </CardContent>
 
-      <Divider sx={{ m: 4 }} />
+      <Divider sx={{ m: 2 }} />
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Button
@@ -45,10 +45,12 @@ const RegisterCard = () => {
             variant="body2"
             color="InfoBackground"
             fontWeight="bold"
-            fontSize="13px"
+            fontSize="12px"
             sx={{ mb: 1 }}
           >
-            {showLoginForm ? 'Zarejestruj się' : 'Zaloguj się'}
+            {showLoginForm
+              ? 'Zarejestruj się'
+              : 'Masz konto? Zaloguj się'}
           </Typography>
         </Button>
       </Box>

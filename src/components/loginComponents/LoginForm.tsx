@@ -3,15 +3,26 @@ import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
 import { useLoginForm } from '../../formLogic/useLoginForm'
 import LoginFormValues from '../../types/loginFormValues'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../config/firebase'
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth'
+import { auth, googleProvider } from '../../config/firebase'
+import GoogleIcon from '@mui/icons-material/Google'
 
 const LoginForm = () => {
   const { register, handleSubmit, errors } = useLoginForm()
 
-  const handleLogIn = async (email: string, password: string) => {
+  const logIn = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider)
     } catch (e) {
       console.log(e)
     }
@@ -19,7 +30,7 @@ const LoginForm = () => {
 
   const onSubmit = (data: LoginFormValues) => {
     console.log('userData:', data)
-    handleLogIn(data.email, data.password)
+    logIn(data.email, data.password)
   }
 
   return (
@@ -31,6 +42,15 @@ const LoginForm = () => {
 
       <Button type="submit" variant="contained">
         Zaloguj się
+      </Button>
+
+      <Button
+        onClick={signInWithGoogle}
+        variant="contained"
+        startIcon={<GoogleIcon />}
+        sx={{ fontSize: '12px', mt: 1 }}
+      >
+        Zaloguj się z kontem Google
       </Button>
     </form>
   )

@@ -3,7 +3,7 @@ import { Box, CssBaseline, createTheme } from '@mui/material'
 import './styles/app.scss'
 import RegisterCard from './components/loginComponents/RegisterCard'
 import { auth } from './config/firebase'
-import { onAuthStateChanged, updateCurrentUser } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 import { useState } from 'react'
 import Main from './components/Main'
 
