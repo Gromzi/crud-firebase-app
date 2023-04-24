@@ -6,10 +6,9 @@ import {
 } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
-import InputProps from '../../types/inputProps'
 import { useState } from 'react'
 
-const PasswordInput = ({ register, errors }: InputProps) => {
+const PasswordInput = ({ register, errors }: any) => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (

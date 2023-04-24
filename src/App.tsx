@@ -2,6 +2,10 @@ import { ThemeProvider } from '@emotion/react'
 import { Box, CssBaseline, createTheme } from '@mui/material'
 import './styles/app.scss'
 import RegisterCard from './components/loginComponents/RegisterCard'
+import { auth } from './config/firebase'
+import { onAuthStateChanged, updateCurrentUser } from 'firebase/auth'
+import { useState } from 'react'
+import Main from './components/Main'
 
 const theme = createTheme({
   palette: {
@@ -27,14 +31,25 @@ const theme = createTheme({
 })
 
 function App() {
+  const [user, setUser] = useState<any>({})
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser)
+  })
+
+  auth.currentUser
+    ? console.log(`Zalogowany użytkownik: ${user.email}`)
+    : console.log('Nie zalogowano')
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
       <Box
         className="appContainer"
         sx={{ backgroundColor: 'primary.main' }}
       >
-        <RegisterCard />
+        {auth.currentUser ? <Main user={user} /> : <RegisterCard />}
       </Box>
     </ThemeProvider>
   )

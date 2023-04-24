@@ -1,7 +1,6 @@
 import { TextField, Typography } from '@mui/material'
-import InputProps from '../../types/inputProps'
 
-const EmailInput = ({ register, errors }: InputProps) => {
+const EmailInput = ({ register, errors }: any) => {
   return (
     <>
       <TextField

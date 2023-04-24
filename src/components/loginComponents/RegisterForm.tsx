@@ -1,31 +1,27 @@
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
 import ConfirmPasswordInput from './ConfirmPasswordInput'
-import { useEffect } from 'react'
 import { useRegistrationForm } from '../../formLogic/useRegistrationForm'
 import FormValues from '../../types/formValues'
 import { Button, Divider } from '@mui/material'
-import RegisterFormProps from '../../types/registerFormProps'
+import { auth } from '../../config/firebase'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
-const RegisterForm = ({
-  userData,
-  handleSetUserData,
-  handleSetActiveStep,
-}: RegisterFormProps) => {
-  const { register, handleSubmit, errors, setValue } =
-    useRegistrationForm()
+const RegisterForm = () => {
+  const { register, handleSubmit, errors } = useRegistrationForm()
+
+  const handleSignIn = async (email: string, password: string) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password)
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   const onSubmit = (data: FormValues) => {
     console.log('userData:', data)
-    handleSetUserData(data)
-    handleSetActiveStep(1)
+    handleSignIn(data.email, data.password)
   }
-
-  useEffect(() => {
-    setValue('email', userData.email)
-    setValue('password', userData.password)
-    setValue('confirmPassword', userData.confirmPassword)
-  }, [setValue])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
@@ -36,7 +32,7 @@ const RegisterForm = ({
       <Divider variant="middle" sx={{ ml: 3, mt: 3, mr: 3, mb: 2 }} />
 
       <Button type="submit" variant="contained">
-        Zaloguj się
+        Zarejestruj się
       </Button>
     </form>
   )

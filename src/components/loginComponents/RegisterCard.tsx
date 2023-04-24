@@ -1,23 +1,17 @@
-import { Card, CardContent, Divider, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Typography,
+} from '@mui/material'
 import { useState } from 'react'
-import FormValues from '../../types/formValues'
 import RegisterForm from './RegisterForm'
+import LoginForm from './LoginForm'
 
 const RegisterCard = () => {
-  const [activeStep, setActiveStep] = useState<number>(0)
-
-  const [userData, setUserData] = useState<FormValues>({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  })
-
-  const handleSetActiveStep = (newState: number) => {
-    setActiveStep(newState)
-  }
-  const handleSetUserData = (newState: FormValues) => {
-    setUserData(newState)
-  }
+  const [showLoginForm, setShowLoginForm] = useState(true)
 
   return (
     <Card
@@ -29,18 +23,35 @@ const RegisterCard = () => {
         variant="h1"
         sx={{ textAlign: 'center', fontWeight: 'bold', p: 2 }}
       >
-        Zaloguj się
+        {showLoginForm ? 'Zaloguj się' : 'Zarejestruj się'}
       </Typography>
 
       <Divider variant="middle" />
 
       <CardContent>
-        <RegisterForm
-          userData={userData}
-          handleSetUserData={handleSetUserData}
-          handleSetActiveStep={handleSetActiveStep}
-        />
+        {showLoginForm ? <LoginForm /> : <RegisterForm />}
       </CardContent>
+
+      <Divider sx={{ m: 4 }} />
+
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          onClick={() => {
+            setShowLoginForm(!showLoginForm)
+          }}
+          variant="text"
+        >
+          <Typography
+            variant="body2"
+            color="InfoBackground"
+            fontWeight="bold"
+            fontSize="13px"
+            sx={{ mb: 1 }}
+          >
+            {showLoginForm ? 'Zarejestruj się' : 'Zaloguj się'}
+          </Typography>
+        </Button>
+      </Box>
     </Card>
   )
 }

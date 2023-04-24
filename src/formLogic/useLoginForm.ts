@@ -1,15 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import FormValues from '../types/formValues'
-import schema from './registerValidationSchema'
+import LoginFormValues from '../types/loginFormValues'
+import schema from './loginValidationSchema'
 
-export const useRegistrationForm = () => {
+export const useLoginForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<FormValues>({
+  } = useForm<LoginFormValues>({
     resolver: yupResolver(schema),
   })
 
