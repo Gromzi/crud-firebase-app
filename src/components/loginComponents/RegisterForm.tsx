@@ -8,10 +8,14 @@ import { auth } from '../../config/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import setErrorType from '../../types/setErrorType'
 
-const RegisterForm = ({ handleSetError }: setErrorType) => {
+const RegisterForm = ({
+  handleSetError,
+  handleSetLoader,
+}: setErrorType) => {
   const { register, handleSubmit, errors } = useRegistrationForm()
 
   const handleSignIn = async (email: string, password: string) => {
+    handleSetLoader(true)
     try {
       await createUserWithEmailAndPassword(auth, email, password)
     } catch (e) {
@@ -35,6 +39,7 @@ const RegisterForm = ({ handleSetError }: setErrorType) => {
           )
       }
     }
+    handleSetLoader(false)
   }
 
   const onSubmit = (data: FormValues) => {

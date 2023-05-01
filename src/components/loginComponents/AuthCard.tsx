@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Divider,
   Typography,
 } from '@mui/material'
@@ -13,9 +14,13 @@ import LoginForm from './LoginForm'
 const AuthCard = () => {
   const [showLoginForm, setShowLoginForm] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [loader, setLoader] = useState<boolean>(false)
 
   const handleSetError = (message: string) => {
     setError(message)
+  }
+  const handleSetLoader = (state: boolean) => {
+    setLoader(state)
   }
 
   return (
@@ -35,9 +40,15 @@ const AuthCard = () => {
 
       <CardContent>
         {showLoginForm ? (
-          <LoginForm handleSetError={handleSetError} />
+          <LoginForm
+            handleSetError={handleSetError}
+            handleSetLoader={handleSetLoader}
+          />
         ) : (
-          <RegisterForm handleSetError={handleSetError} />
+          <RegisterForm
+            handleSetError={handleSetError}
+            handleSetLoader={handleSetLoader}
+          />
         )}
       </CardContent>
 
@@ -71,9 +82,20 @@ const AuthCard = () => {
         </Button>
 
         {error ? (
-          <Typography variant="caption" color="error" fontSize={13}>
+          <Typography
+            variant="caption"
+            color="error"
+            fontSize={13}
+            textAlign="center"
+          >
             {error}
           </Typography>
+        ) : null}
+
+        {loader ? (
+          <Box>
+            <CircularProgress />
+          </Box>
         ) : null}
       </Box>
     </Card>

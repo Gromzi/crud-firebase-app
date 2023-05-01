@@ -11,10 +11,14 @@ import { auth, googleProvider } from '../../config/firebase'
 import GoogleIcon from '@mui/icons-material/Google'
 import setErrorType from '../../types/setErrorType'
 
-const LoginForm = ({ handleSetError }: setErrorType) => {
+const LoginForm = ({
+  handleSetError,
+  handleSetLoader,
+}: setErrorType) => {
   const { register, handleSubmit, errors } = useLoginForm()
 
   const logIn = async (email: string, password: string) => {
+    handleSetLoader(true)
     try {
       await signInWithEmailAndPassword(auth, email, password)
     } catch (e) {
@@ -44,13 +48,42 @@ const LoginForm = ({ handleSetError }: setErrorType) => {
           )
       }
     }
+    handleSetLoader(false)
   }
   const signInWithGoogle = async () => {
+    handleSetLoader(true)
     try {
       await signInWithPopup(auth, googleProvider)
     } catch (e) {
       console.log(e)
+      const errorMessage = (e as { message: string }).message
+
+      switch (errorMessage) {
+        case 'Firebase: Error (auth/popup-blocked).':
+          handleSetError('Przeglądarka zablokowała wyskakujące okno')
+          break
+        case 'Firebase: Error (auth/popup-closed-by-user).':
+          handleSetError(
+            'Okno zostało zamknięte przed zakończeniem rejestracji'
+          )
+          break
+        case 'Firebase: Error (auth/unauthorized-domain).':
+          handleSetError('Nieautoryzowana domena')
+          break
+        case 'Firebase: Error (auth/internal-error).':
+          handleSetError('Wystąpił błąd wewnętrzny')
+          break
+        default:
+          console.log(
+            'An error occurred while signing in: ',
+            errorMessage
+          )
+          handleSetError(
+            'Wystąpił problem z rejestracją: ' + errorMessage
+          )
+      }
     }
+    handleSetLoader(false)
   }
 
   const onSubmit = (data: LoginFormValues) => {
