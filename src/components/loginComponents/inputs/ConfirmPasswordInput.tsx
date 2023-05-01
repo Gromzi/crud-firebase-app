@@ -1,5 +1,5 @@
 import { TextField, Typography } from '@mui/material'
-import InputProps from '../../types/inputProps'
+import InputProps from '../../../types/inputProps'
 
 const ConfirmPasswordInput = ({ register, errors }: InputProps) => {
   return (

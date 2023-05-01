@@ -3,9 +3,9 @@ import { Box, CssBaseline, createTheme } from '@mui/material'
 import './styles/app.scss'
 import RegisterCard from './components/loginComponents/RegisterCard'
 import { auth } from './config/firebase'
-import { onAuthStateChanged } from 'firebase/auth'
-import { useState } from 'react'
 import Main from './components/Main'
+import { useContext } from 'react'
+import { UserContext } from './context/UserContext'
 
 const theme = createTheme({
   palette: {
@@ -31,14 +31,15 @@ const theme = createTheme({
 })
 
 function App() {
-  const [user, setUser] = useState<any>({})
+  const { user } = useContext(UserContext)
+  // const [user, setUser] = useState<User | null>(null)
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser)
-  })
+  // onAuthStateChanged(auth, (currentUser) => {
+  //   setUser(currentUser)
+  // })
 
   auth.currentUser
-    ? console.log(`Zalogowany użytkownik: ${user.email}`)
+    ? console.log(`Zalogowany użytkownik: ${auth.currentUser.email}`)
     : console.log('Nie zalogowano')
 
   return (
@@ -49,7 +50,7 @@ function App() {
         className="appContainer"
         sx={{ backgroundColor: 'primary.main' }}
       >
-        {auth.currentUser ? <Main user={user} /> : <RegisterCard />}
+        {user ? <Main /> : <RegisterCard />}
       </Box>
     </ThemeProvider>
   )

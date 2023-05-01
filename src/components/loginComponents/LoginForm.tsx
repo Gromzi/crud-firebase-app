@@ -1,6 +1,6 @@
 import { Divider, Button } from '@mui/material'
-import EmailInput from './EmailInput'
-import PasswordInput from './PasswordInput'
+import EmailInput from './inputs/EmailInput'
+import PasswordInput from './inputs/PasswordInput'
 import { useLoginForm } from '../../formLogic/useLoginForm'
 import LoginFormValues from '../../types/loginFormValues'
 import {
