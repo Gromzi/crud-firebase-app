@@ -6,15 +6,34 @@ import FormValues from '../../types/formValues'
 import { Button, Divider } from '@mui/material'
 import { auth } from '../../config/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import setErrorType from '../../types/setErrorType'
 
-const RegisterForm = () => {
+const RegisterForm = ({ handleSetError }: setErrorType) => {
   const { register, handleSubmit, errors } = useRegistrationForm()
 
   const handleSignIn = async (email: string, password: string) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password)
     } catch (e) {
-      console.error(e)
+      console.log(e)
+      const errorMessage = (e as { message: string }).message
+
+      switch (errorMessage) {
+        case 'Firebase: Error (auth/email-already-in-use).':
+          handleSetError('Konto z tym adresem już istnieje')
+          break
+        case 'Firebase: Error (auth/invalid-email).':
+          handleSetError('Nieprawidłowy email')
+          break
+        default:
+          console.log(
+            'An error occurred while registering',
+            errorMessage
+          )
+          handleSetError(
+            'Wystąpił błąd przy rejestracji: ' + errorMessage
+          )
+      }
     }
   }
 
