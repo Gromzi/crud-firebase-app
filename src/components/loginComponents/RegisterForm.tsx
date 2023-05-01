@@ -1,7 +1,7 @@
 import EmailInput from './inputs/EmailInput'
 import PasswordInput from './inputs/PasswordInput'
 import ConfirmPasswordInput from './inputs/ConfirmPasswordInput'
-import { useRegistrationForm } from '../../formLogic/useRegistrationForm'
+import { useRegistrationForm } from '../../formLogic/registerForm/useRegistrationForm'
 import FormValues from '../../types/formValues'
 import { Button, Divider } from '@mui/material'
 import { auth } from '../../config/firebase'

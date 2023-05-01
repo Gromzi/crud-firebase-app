@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import FormValues from '../types/formValues'
-import schema from './registerValidationSchema'
+import FormValues from '../../types/formValues'
+import schema from '../registerForm/registerValidationSchema'
 
 export const useRegistrationForm = () => {
   const {
