@@ -10,8 +10,13 @@ import { useState } from 'react'
 import RegisterForm from './RegisterForm'
 import LoginForm from './LoginForm'
 
-const RegisterCard = () => {
+const AuthCard = () => {
   const [showLoginForm, setShowLoginForm] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSetError = (message: string) => {
+    setError(message)
+  }
 
   return (
     <Card
@@ -29,14 +34,25 @@ const RegisterCard = () => {
       <Divider variant="middle" />
 
       <CardContent>
-        {showLoginForm ? <LoginForm /> : <RegisterForm />}
+        {showLoginForm ? (
+          <LoginForm handleSetError={handleSetError} />
+        ) : (
+          <RegisterForm handleSetError={handleSetError} />
+        )}
       </CardContent>
 
       <Divider sx={{ m: 2 }} />
 
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         <Button
           onClick={() => {
+            handleSetError('')
             setShowLoginForm(!showLoginForm)
           }}
           variant="text"
@@ -49,13 +65,19 @@ const RegisterCard = () => {
             sx={{ mb: 1 }}
           >
             {showLoginForm
-              ? 'Zarejestruj się'
+              ? 'Nie masz konta? Zarejestruj się'
               : 'Masz konto? Zaloguj się'}
           </Typography>
         </Button>
+
+        {error ? (
+          <Typography variant="caption" color="error" fontSize={13}>
+            {error}
+          </Typography>
+        ) : null}
       </Box>
     </Card>
   )
 }
 
-export default RegisterCard
+export default AuthCard

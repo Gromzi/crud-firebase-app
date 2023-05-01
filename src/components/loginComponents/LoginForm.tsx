@@ -9,8 +9,9 @@ import {
 } from 'firebase/auth'
 import { auth, googleProvider } from '../../config/firebase'
 import GoogleIcon from '@mui/icons-material/Google'
+import setErrorType from '../../types/setErrorType'
 
-const LoginForm = () => {
+const LoginForm = ({ handleSetError }: setErrorType) => {
   const { register, handleSubmit, errors } = useLoginForm()
 
   const logIn = async (email: string, password: string) => {
@@ -18,6 +19,30 @@ const LoginForm = () => {
       await signInWithEmailAndPassword(auth, email, password)
     } catch (e) {
       console.log(e)
+      const errorMessage = (e as { message: string }).message
+
+      switch (errorMessage) {
+        case 'Firebase: Error (auth/invalid-email).':
+          handleSetError('Nieprawidłowy email')
+          break
+        case 'Firebase: Error (auth/user-disabled).':
+          handleSetError('Konto zostało dezaktywowane')
+          break
+        case 'Firebase: Error (auth/user-not-found).':
+          handleSetError('Nieznaleziono użytkownika')
+          break
+        case 'Firebase: Error (auth/wrong-password).':
+          handleSetError('Nieprawidłowe hasło')
+          break
+        default:
+          console.log(
+            'An error occurred while signing in: ',
+            errorMessage
+          )
+          handleSetError(
+            'Wystąpił problem z logowaniem: ' + errorMessage
+          )
+      }
     }
   }
   const signInWithGoogle = async () => {

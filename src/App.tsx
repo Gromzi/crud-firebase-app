@@ -1,11 +1,11 @@
 import { ThemeProvider } from '@emotion/react'
 import { Box, CssBaseline, createTheme } from '@mui/material'
 import './styles/app.scss'
-import RegisterCard from './components/loginComponents/RegisterCard'
 import { auth } from './config/firebase'
 import Main from './components/Main'
 import { useContext } from 'react'
 import { UserContext } from './context/UserContext'
+import AuthCard from './components/loginComponents/AuthCard'
 
 const theme = createTheme({
   palette: {
@@ -50,7 +50,7 @@ function App() {
         className="appContainer"
         sx={{ backgroundColor: 'primary.main' }}
       >
-        {user ? <Main /> : <RegisterCard />}
+        {user ? <Main /> : <AuthCard />}
       </Box>
     </ThemeProvider>
   )
