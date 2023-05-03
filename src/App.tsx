@@ -1,42 +1,15 @@
 import { ThemeProvider } from '@emotion/react'
-import { Box, CssBaseline, createTheme } from '@mui/material'
+import { Box, CssBaseline } from '@mui/material'
 import './styles/app.scss'
 import { auth } from './config/firebase'
-import Main from './components/Main'
+import Home from './pages/Home'
 import { useContext } from 'react'
 import { UserContext } from './context/UserContext'
-import AuthCard from './components/loginComponents/AuthCard'
-
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#001e3c',
-    },
-    secondary: {
-      main: '#0a1929',
-    },
-    text: {
-      primary: '#e7ebf0',
-      secondary: 'b2bac2',
-    },
-
-    contrastThreshold: 4.5,
-  },
-  typography: {
-    h1: {
-      fontSize: 36,
-    },
-  },
-})
+import AuthCard from './pages/AuthCard'
+import theme from './styles/theme/appTheme'
 
 function App() {
   const { user } = useContext(UserContext)
-  // const [user, setUser] = useState<User | null>(null)
-
-  // onAuthStateChanged(auth, (currentUser) => {
-  //   setUser(currentUser)
-  // })
 
   auth.currentUser
     ? console.log(`Zalogowany użytkownik: ${auth.currentUser.email}`)
@@ -50,7 +23,7 @@ function App() {
         className="appContainer"
         sx={{ backgroundColor: 'primary.main' }}
       >
-        {user ? <Main /> : <AuthCard />}
+        {user ? <Home /> : <AuthCard />}
       </Box>
     </ThemeProvider>
   )

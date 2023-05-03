@@ -8,8 +8,8 @@ import {
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
-import RegisterForm from './RegisterForm'
-import LoginForm from './LoginForm'
+import RegisterForm from '../components/loginComponents/RegisterForm'
+import LoginForm from '../components/loginComponents/LoginForm'
 
 const AuthCard = () => {
   const [showLoginForm, setShowLoginForm] = useState(true)

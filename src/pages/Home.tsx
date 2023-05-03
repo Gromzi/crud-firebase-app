@@ -4,7 +4,7 @@ import { auth } from '../config/firebase'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'
 
-const Main = () => {
+const Home = () => {
   const { user } = useContext(UserContext)
 
   const logout = async () => {
@@ -25,4 +25,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default Home
