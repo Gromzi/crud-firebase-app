@@ -24,81 +24,86 @@ const AuthCard = () => {
   }
 
   return (
-    <Card
-      className="formCard"
-      elevation={16}
-      sx={{ backgroundColor: 'primary.main', borderRadius: 3 }}
+    <Box
+      className="authContainer"
+      sx={{ backgroundColor: 'primary.main' }}
     >
-      <Typography
-        variant="h1"
-        sx={{ textAlign: 'center', fontWeight: 'bold', p: 2 }}
+      <Card
+        className="formCard"
+        elevation={16}
+        sx={{ backgroundColor: 'primary.main', borderRadius: 3 }}
       >
-        {showLoginForm ? 'Zaloguj się' : 'Zarejestruj się'}
-      </Typography>
-
-      <Divider variant="middle" />
-
-      <CardContent>
-        {showLoginForm ? (
-          <LoginForm
-            handleSetError={handleSetError}
-            handleSetLoader={handleSetLoader}
-          />
-        ) : (
-          <RegisterForm
-            handleSetError={handleSetError}
-            handleSetLoader={handleSetLoader}
-          />
-        )}
-      </CardContent>
-
-      <Divider sx={{ m: 2 }} />
-
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Button
-          onClick={() => {
-            handleSetError('')
-            setShowLoginForm(!showLoginForm)
-          }}
-          variant="text"
+        <Typography
+          variant="h1"
+          sx={{ textAlign: 'center', fontWeight: 'bold', p: 2 }}
         >
-          <Typography
-            variant="body2"
-            color="InfoBackground"
-            fontWeight="bold"
-            fontSize="12px"
-            sx={{ mb: 1 }}
-          >
-            {showLoginForm
-              ? 'Nie masz konta? Zarejestruj się'
-              : 'Masz konto? Zaloguj się'}
-          </Typography>
-        </Button>
+          {showLoginForm ? 'Zaloguj się' : 'Zarejestruj się'}
+        </Typography>
 
-        {error ? (
-          <Typography
-            variant="caption"
-            color="error"
-            fontSize={13}
-            textAlign="center"
-          >
-            {error}
-          </Typography>
-        ) : null}
+        <Divider variant="middle" />
 
-        {loader ? (
-          <Box>
-            <CircularProgress />
-          </Box>
-        ) : null}
-      </Box>
-    </Card>
+        <CardContent>
+          {showLoginForm ? (
+            <LoginForm
+              handleSetError={handleSetError}
+              handleSetLoader={handleSetLoader}
+            />
+          ) : (
+            <RegisterForm
+              handleSetError={handleSetError}
+              handleSetLoader={handleSetLoader}
+            />
+          )}
+        </CardContent>
+
+        <Divider sx={{ m: 2 }} />
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            onClick={() => {
+              handleSetError('')
+              setShowLoginForm(!showLoginForm)
+            }}
+            variant="text"
+          >
+            <Typography
+              variant="body2"
+              color="InfoBackground"
+              fontWeight="bold"
+              fontSize="12px"
+              sx={{ mb: 1 }}
+            >
+              {showLoginForm
+                ? 'Nie masz konta? Zarejestruj się'
+                : 'Masz konto? Zaloguj się'}
+            </Typography>
+          </Button>
+
+          {error ? (
+            <Typography
+              variant="caption"
+              color="error"
+              fontSize={13}
+              textAlign="center"
+            >
+              {error}
+            </Typography>
+          ) : null}
+
+          {loader ? (
+            <Box>
+              <CircularProgress />
+            </Box>
+          ) : null}
+        </Box>
+      </Card>
+    </Box>
   )
 }
 

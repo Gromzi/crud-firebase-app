@@ -1,12 +1,12 @@
 import { ThemeProvider } from '@emotion/react'
-import { Box, CssBaseline } from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import './styles/app.scss'
 import { auth } from './config/firebase'
-import Home from './pages/Home'
 import { useContext } from 'react'
 import { UserContext } from './context/UserContext'
-import AuthCard from './pages/AuthCard'
 import theme from './styles/theme/appTheme'
+import { BrowserRouter as Router } from 'react-router-dom'
+import AppRoutes from './router/AppRoutes'
 
 function App() {
   const { user } = useContext(UserContext)
@@ -19,12 +19,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box
-        className="appContainer"
-        sx={{ backgroundColor: 'primary.main' }}
-      >
-        {user ? <Home /> : <AuthCard />}
-      </Box>
+      <Router>
+        <AppRoutes user={user} />
+      </Router>
     </ThemeProvider>
   )
 }
