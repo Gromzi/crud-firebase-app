@@ -2,6 +2,7 @@ import {
   BottomNavigation,
   Box,
   Button,
+  CircularProgress,
   Typography,
 } from '@mui/material'
 import { signOut } from 'firebase/auth'
@@ -11,6 +12,7 @@ import { UserContext } from '../context/UserContext'
 import { db } from '../config/firebase'
 import { getDocs, collection } from 'firebase/firestore'
 import Game from '../types/Game'
+import GamesList from '../components/homeComponents/GamesList'
 
 const Home = () => {
   const { user } = useContext(UserContext)
@@ -50,13 +52,15 @@ const Home = () => {
       className="homeContainer"
       sx={{ backgroundColor: 'primary.main' }}
     >
-      <Typography>{`Zalogowany użytkownik: ${user?.email}`}</Typography>
+      <BottomNavigation className="upperNav">
+        <Typography>{`Zalogowany użytkownik: ${user?.email}`}</Typography>
+      </BottomNavigation>
 
       <Box className="homeContent">
-        {games ? <Typography>{games[0].title}</Typography> : null}
+        {games ? <GamesList games={games} /> : <CircularProgress />}
       </Box>
 
-      <BottomNavigation sx={{ width: '100vw' }}>
+      <BottomNavigation className="bottomNav">
         <Button onClick={logout} color="error">
           Wyloguj się
         </Button>
