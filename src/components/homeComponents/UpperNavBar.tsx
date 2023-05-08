@@ -8,13 +8,25 @@ import {
 } from '@mui/material'
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext'
+import LogoutIcon from '@mui/icons-material/Logout'
 
-const UpperNavBar = () => {
+interface Props {
+  handleOpenDialog: () => void
+}
+
+const UpperNavBar = ({ handleOpenDialog }: Props) => {
   const { user } = useContext(UserContext)
 
   return (
     <AppBar className="upperNav" position="fixed">
       <Toolbar>
+        <IconButton
+          onClick={handleOpenDialog}
+          sx={{ position: 'absolute', left: 10 }}
+        >
+          <LogoutIcon color="error" />
+        </IconButton>
+
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Gierki
         </Typography>

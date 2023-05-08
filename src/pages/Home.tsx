@@ -1,10 +1,4 @@
-import {
-  BottomNavigation,
-  Box,
-  Button,
-  CircularProgress,
-  Fab,
-} from '@mui/material'
+import { Box, CircularProgress, Fab } from '@mui/material'
 import { signOut } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import { useContext, useEffect, useState } from 'react'
@@ -25,7 +19,7 @@ const Home = () => {
   const [currentGameId, setCurrentGameId] = useState<string | null>(
     null
   )
-  const handleOpen = () => setShowModal(true)
+  const handleOpenModal = () => setShowModal(true)
   const handleClose = () => {
     setCurrentGameId(null)
     setShowModal(false)
@@ -40,7 +34,7 @@ const Home = () => {
 
   const handleRowClick = (gameId: string) => {
     setCurrentGameId(gameId)
-    handleOpen()
+    handleOpenModal()
   }
 
   const [games, setGames] = useState<Game[] | null>(null)
@@ -88,7 +82,7 @@ const Home = () => {
         gameId={currentGameId}
       />
 
-      <UpperNavBar />
+      <UpperNavBar handleOpenDialog={handleOpenDialog} />
 
       <Box className="homeContent">
         {games ? (
@@ -99,7 +93,7 @@ const Home = () => {
 
         <Box className="addGameButtonContainer">
           <Fab
-            onClick={handleOpen}
+            onClick={handleOpenModal}
             aria-label="add"
             sx={{
               borderRadius: '5px',
@@ -113,12 +107,6 @@ const Home = () => {
           </Fab>
         </Box>
       </Box>
-
-      <BottomNavigation className="bottomNav">
-        <Button onClick={handleOpenDialog} color="error">
-          Wyloguj się
-        </Button>
-      </BottomNavigation>
 
       <LogoutWarning
         open={showDialog}

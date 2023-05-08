@@ -25,7 +25,11 @@ const GamesList = ({ games, onRowClick }: GamesListProps) => {
   }
 
   return (
-    <TableContainer component={Paper} className="gamesList">
+    <TableContainer
+      elevation={1}
+      component={Paper}
+      className="gamesList"
+    >
       <Table>
         <TableHead>
           <TableRow>
