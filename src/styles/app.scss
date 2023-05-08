@@ -52,10 +52,20 @@
     padding: 10px;
 
     .gamesList {
-      max-height: 100%;
+      max-height: 75%;
       max-width: 80%;
       overflow-x: auto;
       overflow-y: auto;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .authContainer {
+    .formCard {
+      padding: 0 5px;
+      margin: 0 15px;
+      width: auto;
     }
   }
 }
