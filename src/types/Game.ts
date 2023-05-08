@@ -5,6 +5,7 @@ interface Game {
   release: string
   rating: number
   finished: boolean
+  uid: string
 }
 
 export default Game

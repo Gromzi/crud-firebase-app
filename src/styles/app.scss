@@ -53,10 +53,17 @@
 
     .gamesList {
       max-height: 75%;
-      max-width: 80%;
+      max-width: 95vw;
       overflow-x: auto;
       overflow-y: auto;
     }
+  }
+
+  .addGameButtonContainer {
+    width: 100vw;
+    padding: 0 10px 10px 0;
+    display: flex;
+    justify-content: center;
   }
 }
 
