@@ -5,11 +5,13 @@ import {
   CardContent,
   CircularProgress,
   Divider,
+  Paper,
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
 import RegisterForm from '../components/loginComponents/RegisterForm'
 import LoginForm from '../components/loginComponents/LoginForm'
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset'
 
 const AuthCard = () => {
   const [showLoginForm, setShowLoginForm] = useState(true)
@@ -28,6 +30,24 @@ const AuthCard = () => {
       className="authContainer"
       sx={{ backgroundColor: 'primary.main' }}
     >
+      <Paper
+        elevation={2}
+        sx={{
+          width: '100vw',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          mb: 3,
+          pb: 2,
+          backgroundColor: 'primary.main',
+        }}
+      >
+        <VideogameAssetIcon sx={{ fontSize: '75px' }} />
+        <Typography fontSize="32px" fontWeight="bold">
+          Baza gier
+        </Typography>
+      </Paper>
+
       <Card
         className="formCard"
         elevation={16}

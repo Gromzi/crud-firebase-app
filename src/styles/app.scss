@@ -4,14 +4,13 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 
   .formCard {
     width: 400px;
     padding: 0 50px;
     padding-bottom: 3%;
-    // min-width: 300px;
     min-height: 50svh;
 
     overflow-y: auto;

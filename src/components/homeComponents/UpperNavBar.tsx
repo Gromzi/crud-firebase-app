@@ -28,7 +28,7 @@ const UpperNavBar = ({ handleOpenDialog }: Props) => {
         </IconButton>
 
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Gierki
+          Baza gier
         </Typography>
         {user ? (
           <Tooltip title="Account settings">
