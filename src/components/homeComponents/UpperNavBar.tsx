@@ -16,7 +16,7 @@ const UpperNavBar = () => {
     <AppBar className="upperNav" position="fixed">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Games
+          Gierki
         </Typography>
         {user ? (
           <Tooltip title="Account settings">
@@ -29,9 +29,7 @@ const UpperNavBar = () => {
               </Avatar>
             </IconButton>
           </Tooltip>
-        ) : (
-          ''
-        )}
+        ) : null}
       </Toolbar>
     </AppBar>
   )

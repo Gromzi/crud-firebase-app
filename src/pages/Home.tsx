@@ -1,12 +1,9 @@
 import {
-  AppBar,
-  Avatar,
   BottomNavigation,
   Box,
   Button,
   CircularProgress,
   Fab,
-  Typography,
 } from '@mui/material'
 import { signOut } from 'firebase/auth'
 import { auth } from '../config/firebase'
@@ -19,6 +16,7 @@ import GamesList from '../components/homeComponents/GamesList'
 import AddIcon from '@mui/icons-material/Add'
 import GamesModal from '../components/homeComponents/GamesModal'
 import UpperNavBar from '../components/homeComponents/UpperNavBar'
+import LogoutWarning from '../components/homeComponents/LogoutWarning'
 
 const Home = () => {
   const { user } = useContext(UserContext)
@@ -31,6 +29,13 @@ const Home = () => {
   const handleClose = () => {
     setCurrentGameId(null)
     setShowModal(false)
+  }
+
+  const [showDialog, setShowDialog] = useState<boolean>(false)
+  const handleOpenDialog = () => setShowDialog(true)
+  const handleCloseDialog = (signOut: boolean) => {
+    if (signOut) logout()
+    setShowDialog(false)
   }
 
   const handleRowClick = (gameId: string) => {
@@ -101,6 +106,7 @@ const Home = () => {
               backgroundColor: '#1e1e1e',
               color: 'white',
               width: '95vw',
+              mt: 0.5,
             }}
           >
             <AddIcon />
@@ -109,10 +115,15 @@ const Home = () => {
       </Box>
 
       <BottomNavigation className="bottomNav">
-        <Button onClick={logout} color="error">
+        <Button onClick={handleOpenDialog} color="error">
           Wyloguj się
         </Button>
       </BottomNavigation>
+
+      <LogoutWarning
+        open={showDialog}
+        handleClose={handleCloseDialog}
+      />
     </Box>
   )
 }
