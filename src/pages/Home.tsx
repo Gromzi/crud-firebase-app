@@ -1,10 +1,11 @@
 import {
+  AppBar,
+  Avatar,
   BottomNavigation,
   Box,
   Button,
   CircularProgress,
   Fab,
-  IconButton,
   Typography,
 } from '@mui/material'
 import { signOut } from 'firebase/auth'
@@ -17,6 +18,7 @@ import Game from '../types/Game'
 import GamesList from '../components/homeComponents/GamesList'
 import AddIcon from '@mui/icons-material/Add'
 import GamesModal from '../components/homeComponents/GamesModal'
+import UpperNavBar from '../components/homeComponents/UpperNavBar'
 
 const Home = () => {
   const { user } = useContext(UserContext)
@@ -81,9 +83,7 @@ const Home = () => {
         gameId={currentGameId}
       />
 
-      <BottomNavigation className="upperNav">
-        <Typography textAlign="center">{`Zalogowany użytkownik: ${user?.email}`}</Typography>
-      </BottomNavigation>
+      <UpperNavBar />
 
       <Box className="homeContent">
         {games ? (
@@ -91,25 +91,21 @@ const Home = () => {
         ) : (
           <CircularProgress />
         )}
-      </Box>
 
-      {/* <IconButton className="addGameButton">
-        <AddIcon />
-      </IconButton> */}
-
-      <Box className="addGameButtonContainer">
-        <Fab
-          onClick={handleOpen}
-          aria-label="add"
-          sx={{
-            borderRadius: '10px',
-            backgroundColor: '#1e1e1e',
-            color: 'white',
-            width: '90vw',
-          }}
-        >
-          <AddIcon />
-        </Fab>
+        <Box className="addGameButtonContainer">
+          <Fab
+            onClick={handleOpen}
+            aria-label="add"
+            sx={{
+              borderRadius: '5px',
+              backgroundColor: '#1e1e1e',
+              color: 'white',
+              width: '95vw',
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Box>
       </Box>
 
       <BottomNavigation className="bottomNav">
