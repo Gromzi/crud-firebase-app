@@ -14,13 +14,13 @@ import CloseIcon from '@mui/icons-material/Close'
 
 interface GamesListProps {
   games: Game[]
-  onRowClick: (gameId: string) => void
+  onRowClick: (game: Game) => void
 }
 
 const GamesList = ({ games, onRowClick }: GamesListProps) => {
-  const handleRowClick = (gameId: string) => {
+  const handleRowClick = (game: Game) => {
     if (onRowClick) {
-      onRowClick(gameId)
+      onRowClick(game)
     }
   }
 
@@ -44,7 +44,7 @@ const GamesList = ({ games, onRowClick }: GamesListProps) => {
           {games.map((game) => (
             <TableRow
               key={game.id}
-              onClick={() => handleRowClick(game.id)}
+              onClick={() => handleRowClick(game)}
             >
               <TableCell>{game.title}</TableCell>
               <TableCell>{game.genre}</TableCell>

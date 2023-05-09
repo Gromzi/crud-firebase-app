@@ -1,11 +1,9 @@
-interface Game {
-  id: string
+interface modalValues {
   title: string
   genre: string
   release: string
   rating: number | null
   finished: boolean
-  uid: string
 }
 
-export default Game
+export default modalValues

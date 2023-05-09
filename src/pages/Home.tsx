@@ -16,12 +16,14 @@ const Home = () => {
   const { user } = useContext(UserContext)
 
   const [showModal, setShowModal] = useState<boolean>(false)
-  const [currentGameId, setCurrentGameId] = useState<string | null>(
-    null
-  )
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null)
+  const handleSetGame = (game: Game) => {
+    setSelectedGame(game)
+  }
+
   const handleOpenModal = () => setShowModal(true)
-  const handleClose = () => {
-    setCurrentGameId(null)
+  const handleCloseModal = () => {
+    setSelectedGame(null)
     setShowModal(false)
   }
 
@@ -32,8 +34,8 @@ const Home = () => {
     setShowDialog(false)
   }
 
-  const handleRowClick = (gameId: string) => {
-    setCurrentGameId(gameId)
+  const handleRowClick = (game: Game) => {
+    setSelectedGame(game)
     handleOpenModal()
   }
 
@@ -78,8 +80,9 @@ const Home = () => {
     >
       <GamesModal
         open={showModal}
-        handleClose={handleClose}
-        gameId={currentGameId}
+        handleClose={handleCloseModal}
+        game={selectedGame}
+        setGame={handleSetGame}
       />
 
       <UpperNavBar handleOpenDialog={handleOpenDialog} />
