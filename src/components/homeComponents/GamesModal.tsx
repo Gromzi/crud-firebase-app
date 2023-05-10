@@ -8,6 +8,7 @@ import {
 import Game from '../../types/Game'
 import { useModalForm } from '../../formLogic/modalForm/useModalForm'
 import modalValues from '../../types/modalFormValues'
+import { useEffect } from 'react'
 
 interface ModalProps {
   open: boolean
@@ -22,14 +23,26 @@ const GamesModal = ({
   game,
   setGame,
 }: ModalProps) => {
-  const { register, handleSubmit, errors } = useModalForm()
+  const { register, handleSubmit, errors, setValue } = useModalForm()
+
+  useEffect(() => {
+    console.log('useEffect z modala')
+    setValue('title', game ? game.title : '')
+    setValue('genre', game ? game.genre : '')
+    setValue('release', game ? game.release : '')
+    setValue('rating', game ? game.rating : null)
+  }, [setValue, game])
 
   const onSubmit = (data: modalValues) => {
-    console.log(`dane gierki: ${data}`)
+    console.log('dane gierki:', data)
     // Przypisz obiekt żeby zmienić stan i odświeżyć ekran główny
     setGame({
       id: '',
-      ...data,
+      title: data.title,
+      genre: data.genre,
+      release: data.release,
+      rating: data.rating,
+      finished: data.finished,
       uid: '',
     })
     // Dodaj rekord do firestore
@@ -38,7 +51,7 @@ const GamesModal = ({
     handleClose()
   }
 
-  console.log(game)
+  console.log('current game: ' + game)
 
   return (
     <Modal
@@ -79,7 +92,7 @@ const GamesModal = ({
               sx={{ m: 1 }}
               color={errors.title?.message ? 'error' : 'info'}
               {...register('title')}
-              defaultValue={game ? game.title : ''}
+              defaultValue=""
             />
             {errors.title?.message && (
               <Typography
@@ -98,7 +111,7 @@ const GamesModal = ({
               sx={{ m: 1 }}
               color={errors.genre?.message ? 'error' : 'info'}
               {...register('genre')}
-              defaultValue={game ? game.genre : ''}
+              defaultValue=""
             />
             {errors.genre?.message && (
               <Typography
@@ -117,7 +130,7 @@ const GamesModal = ({
               sx={{ m: 1 }}
               color={errors.release?.message ? 'error' : 'info'}
               {...register('release')}
-              defaultValue={game ? game.release : ''}
+              defaultValue=""
             />
             {errors.title?.message && (
               <Typography
@@ -136,7 +149,7 @@ const GamesModal = ({
               sx={{ m: 1 }}
               color={errors.rating?.message ? 'error' : 'info'}
               {...register('rating')}
-              defaultValue={game ? game.rating : null}
+              defaultValue=""
             />
             {errors.rating?.message && (
               <Typography

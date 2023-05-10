@@ -9,11 +9,12 @@ const schema = yup.object().shape({
     .max(4, 'Podaj prawidłowy rok wydania'),
   rating: yup
     .number()
+    .nullable()
     .min(0, 'Oceń od 0 do 100')
     .max(100, 'Oceń od 0 do 100'),
-  finished: yup
-    .boolean()
-    .required('Status przejścia gry jest wymagany'),
+  // finished: yup
+  //   .boolean()
+  //   .required('Status przejścia gry jest wymagany'),
 })
 
 export default schema

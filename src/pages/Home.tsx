@@ -47,6 +47,7 @@ const Home = () => {
   )
 
   useEffect(() => {
+    console.log('useEffect z Home')
     const getGamesList = async () => {
       try {
         const data = await getDocs(gamesCollectionQuery)
@@ -59,7 +60,6 @@ const Home = () => {
           finished: doc.data().finished,
           uid: doc.data().uid,
         }))
-        console.log(filteredData)
         setGames(filteredData)
       } catch (e) {
         console.log(e)
@@ -67,7 +67,7 @@ const Home = () => {
     }
 
     getGamesList()
-  }, [])
+  }, [selectedGame])
 
   const logout = async () => {
     await signOut(auth)
