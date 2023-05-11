@@ -1,6 +1,9 @@
 import {
   Box,
   Button,
+  Checkbox,
+  Divider,
+  FormControlLabel,
   Modal,
   TextField,
   Typography,
@@ -31,6 +34,7 @@ const GamesModal = ({
     setValue('genre', game ? game.genre : '')
     setValue('release', game ? game.release : '')
     setValue('rating', game ? game.rating : null)
+    setValue('finished', game ? game.finished : false)
   }, [setValue, game])
 
   const onSubmit = (data: modalValues) => {
@@ -160,11 +164,38 @@ const GamesModal = ({
                 {errors.rating?.message?.toString()}
               </Typography>
             )}
-          </Box>
 
-          <Button type="submit" variant="contained">
-            {game ? 'Zapisz' : 'Dodaj'}
-          </Button>
+            <FormControlLabel
+              sx={{ pl: 0.75 }}
+              control={
+                <Checkbox
+                  defaultChecked={game?.finished}
+                  color={errors.finished?.message ? 'error' : 'info'}
+                  {...register('finished')}
+                />
+              }
+              label="Ograna"
+            />
+            {errors.finished?.message && (
+              <Typography
+                variant="caption"
+                color="error"
+                sx={{ ml: 1 }}
+              >
+                {errors.finished?.message?.toString()}
+              </Typography>
+            )}
+
+            <Divider sx={{ m: 1 }} />
+
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ justifySelf: 'center' }}
+            >
+              {game ? 'Zapisz' : 'Dodaj'}
+            </Button>
+          </Box>
         </form>
       </Box>
     </Modal>

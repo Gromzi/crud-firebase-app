@@ -8,13 +8,17 @@ const schema = yup.object().shape({
     .required('Rok wydania jest wymagany')
     .max(4, 'Podaj prawidłowy rok wydania'),
   rating: yup
-    .number()
+    .mixed()
     .nullable()
-    .min(0, 'Oceń od 0 do 100')
-    .max(100, 'Oceń od 0 do 100'),
-  // finished: yup
-  //   .boolean()
-  //   .required('Status przejścia gry jest wymagany'),
+    .test('is-number', 'Oceń od 0 do 100', (value) => {
+      if (!value) {
+        return true
+      }
+      return typeof value === 'number' && value >= 0 && value <= 100
+    }),
+  finished: yup
+    .boolean()
+    .required('Status przejścia gry jest wymagany'),
 })
 
 export default schema

@@ -49,7 +49,7 @@ const GamesList = ({ games, onRowClick }: GamesListProps) => {
               <TableCell>{game.title}</TableCell>
               <TableCell>{game.genre}</TableCell>
               <TableCell>{game.release}</TableCell>
-              <TableCell>{game.rating}</TableCell>
+              <TableCell>{game.rating ? game.rating : ''}</TableCell>
               <TableCell>
                 {game.finished ? <CheckIcon /> : <CloseIcon />}
               </TableCell>
