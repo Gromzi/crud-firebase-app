@@ -16,7 +16,7 @@ const LogoutWarning = ({ open, handleClose }: DialogProps) => {
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={() => handleClose(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >

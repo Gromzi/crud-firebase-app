@@ -40,15 +40,15 @@ const GamesModal = ({
   const onSubmit = (data: modalValues) => {
     console.log('dane gierki:', data)
     // Przypisz obiekt żeby zmienić stan i odświeżyć ekran główny
-    setGame({
-      id: '',
-      title: data.title,
-      genre: data.genre,
-      release: data.release,
-      rating: data.rating,
-      finished: data.finished,
-      uid: '',
-    })
+    // setGame({
+    //   id: '',
+    //   title: data.title,
+    //   genre: data.genre,
+    //   release: data.release,
+    //   rating: data.rating,
+    //   finished: data.finished,
+    //   uid: '',
+    // })
     // Dodaj rekord do firestore
 
     // Zamknij modal
