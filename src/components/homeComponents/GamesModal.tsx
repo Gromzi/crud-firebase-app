@@ -11,7 +11,9 @@ import {
 import Game from '../../types/Game'
 import { useModalForm } from '../../formLogic/modalForm/useModalForm'
 import modalValues from '../../types/modalFormValues'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import useCrud from '../../hooks/useCrud'
+import { UserContext } from '../../context/UserContext'
 
 interface ModalProps {
   open: boolean
@@ -21,6 +23,8 @@ interface ModalProps {
 
 const GamesModal = ({ open, handleClose, game }: ModalProps) => {
   const { register, handleSubmit, errors, setValue } = useModalForm()
+  const { createGame, updateGame, deleteGame } = useCrud()
+  const { user } = useContext(UserContext)
 
   useEffect(() => {
     console.log('useEffect z modala')
@@ -35,8 +39,13 @@ const GamesModal = ({ open, handleClose, game }: ModalProps) => {
     console.log('dane gierki:', data)
 
     // Dodaj albo updatuj rekord w firestore
+    if (game) {
+      updateGame({ id: game.id, uid: user!.uid, ...data })
+    } else {
+      createGame({ id: '', uid: user!.uid, ...data })
+    }
 
-    // Zamknij modal
+    // Zamknij modal (w trybie z odświeżeniem Home)
     handleClose(true)
   }
 
@@ -173,13 +182,23 @@ const GamesModal = ({ open, handleClose, game }: ModalProps) => {
 
             <Divider sx={{ m: 1 }} />
 
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ justifySelf: 'center' }}
-            >
+            <Button type="submit" variant="contained" sx={{ mb: 1 }}>
               {game ? 'Zapisz' : 'Dodaj'}
             </Button>
+
+            {game ? (
+              <Button
+                onClick={() => {
+                  deleteGame(game.id)
+                  handleClose(true)
+                }}
+                type="button"
+                variant="contained"
+                color="error"
+              >
+                Usuń grę
+              </Button>
+            ) : null}
           </Box>
         </form>
       </Box>
