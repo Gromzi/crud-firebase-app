@@ -17,13 +17,13 @@ const Home = () => {
 
   const [showModal, setShowModal] = useState<boolean>(false)
   const [selectedGame, setSelectedGame] = useState<Game | null>(null)
-  const handleSetGame = (game: Game) => {
-    setSelectedGame(game)
-  }
+
+  const [homeKey, setHomeKey] = useState<number>(0)
 
   const handleOpenModal = () => setShowModal(true)
-  const handleCloseModal = () => {
+  const handleCloseModal = (refresh: boolean) => {
     setSelectedGame(null)
+    refresh && setHomeKey(homeKey + 1)
     setShowModal(false)
   }
 
@@ -67,7 +67,7 @@ const Home = () => {
     }
 
     getGamesList()
-  }, [selectedGame])
+  }, [homeKey])
 
   const logout = async () => {
     await signOut(auth)
@@ -82,7 +82,6 @@ const Home = () => {
         open={showModal}
         handleClose={handleCloseModal}
         game={selectedGame}
-        setGame={handleSetGame}
       />
 
       <UpperNavBar handleOpenDialog={handleOpenDialog} />

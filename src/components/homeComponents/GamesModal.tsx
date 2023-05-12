@@ -15,17 +15,11 @@ import { useEffect } from 'react'
 
 interface ModalProps {
   open: boolean
-  handleClose: () => void
+  handleClose: (refresh: boolean) => void
   game: Game | null
-  setGame: (game: Game) => void
 }
 
-const GamesModal = ({
-  open,
-  handleClose,
-  game,
-  setGame,
-}: ModalProps) => {
+const GamesModal = ({ open, handleClose, game }: ModalProps) => {
   const { register, handleSubmit, errors, setValue } = useModalForm()
 
   useEffect(() => {
@@ -39,20 +33,11 @@ const GamesModal = ({
 
   const onSubmit = (data: modalValues) => {
     console.log('dane gierki:', data)
-    // Przypisz obiekt żeby zmienić stan i odświeżyć ekran główny
-    // setGame({
-    //   id: '',
-    //   title: data.title,
-    //   genre: data.genre,
-    //   release: data.release,
-    //   rating: data.rating,
-    //   finished: data.finished,
-    //   uid: '',
-    // })
-    // Dodaj rekord do firestore
+
+    // Dodaj albo updatuj rekord w firestore
 
     // Zamknij modal
-    handleClose()
+    handleClose(true)
   }
 
   console.log('current game: ' + game)
@@ -60,7 +45,7 @@ const GamesModal = ({
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={() => handleClose(false)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
