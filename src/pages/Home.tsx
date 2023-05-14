@@ -59,9 +59,14 @@ const Home = () => {
       )
 
       if (searchTerm && searchTerm.trim() !== '') {
+        const searchTermLowercase = searchTerm.toLowerCase()
         userGamesQuery = query(
           userGamesQuery,
-          where('title', 'array-contains', searchTerm)
+          where(
+            'titleLowercase',
+            'array-contains',
+            searchTermLowercase
+          )
         )
       }
 
@@ -70,6 +75,7 @@ const Home = () => {
         const filteredData: Game[] = data.docs.map((doc) => ({
           id: doc.id,
           title: doc.data().title,
+          titleLowercase: doc.data().titleLowercase,
           genre: doc.data().genre,
           release: doc.data().release,
           rating: doc.data().rating,

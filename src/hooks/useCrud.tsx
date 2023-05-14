@@ -14,6 +14,7 @@ const createGame = async (game: Game) => {
 
     await addDoc(gamesCollectionRef, {
       title: game.title,
+      titleLowercase: game.titleLowercase,
       genre: game.genre,
       release: game.release,
       rating: game.rating,
@@ -32,6 +33,7 @@ const updateGame = async (game: Game) => {
 
     await updateDoc(gameDoc, {
       title: game.title,
+      titleLowercase: game.titleLowercase,
       genre: game.genre,
       release: game.release,
       rating: game.rating,

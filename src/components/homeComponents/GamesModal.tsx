@@ -38,11 +38,25 @@ const GamesModal = ({ open, handleClose, game }: ModalProps) => {
   const onSubmit = (data: modalValues) => {
     console.log('dane gierki:', data)
 
+    const lowercaseArray: string[] = data.title
+      .toLowerCase()
+      .split(' ')
+
     // Dodaj albo updatuj rekord w firestore
     if (game) {
-      updateGame({ id: game.id, uid: user!.uid, ...data })
+      updateGame({
+        id: game.id,
+        titleLowercase: lowercaseArray,
+        uid: user!.uid,
+        ...data,
+      })
     } else {
-      createGame({ id: '', uid: user!.uid, ...data })
+      createGame({
+        id: '',
+        titleLowercase: lowercaseArray,
+        uid: user!.uid,
+        ...data,
+      })
     }
 
     // Zamknij modal (w trybie z odświeżeniem Home)
@@ -130,7 +144,7 @@ const GamesModal = ({ open, handleClose, game }: ModalProps) => {
               {...register('release')}
               defaultValue=""
             />
-            {errors.title?.message && (
+            {errors.release?.message && (
               <Typography
                 variant="caption"
                 color="error"
