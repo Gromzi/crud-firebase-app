@@ -42,8 +42,8 @@ const AuthCard = () => {
           backgroundColor: 'primary.main',
         }}
       >
-        <VideogameAssetIcon sx={{ fontSize: '75px' }} />
-        <Typography fontSize="32px" fontWeight="bold">
+        <VideogameAssetIcon sx={{ fontSize: '64px' }} />
+        <Typography fontSize="24px" fontWeight="bold">
           Baza gier
         </Typography>
       </Paper>
