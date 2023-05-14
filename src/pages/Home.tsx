@@ -1,4 +1,10 @@
-import { Box, CircularProgress, Fab, TextField } from '@mui/material'
+import {
+  Box,
+  CircularProgress,
+  Fab,
+  InputAdornment,
+  TextField,
+} from '@mui/material'
 import { signOut } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import { useContext, useEffect, useState } from 'react'
@@ -11,6 +17,7 @@ import AddIcon from '@mui/icons-material/Add'
 import GamesModal from '../components/homeComponents/GamesModal'
 import UpperNavBar from '../components/homeComponents/UpperNavBar'
 import LogoutWarning from '../components/homeComponents/LogoutWarning'
+import SearchIcon from '@mui/icons-material/Search'
 
 const Home = () => {
   const { user } = useContext(UserContext)
@@ -112,12 +119,19 @@ const Home = () => {
       <Box className="homeContent">
         <TextField
           sx={{ mt: 8 }}
-          label="Search Games"
+          label="Wyszukaj grę"
           variant="outlined"
-          size="small"
+          size="medium"
           fullWidth
           value={searchTerm}
           onChange={handleSearchInputChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start" sx={{ pr: 1 }}>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
         />
 
         {games ? (
