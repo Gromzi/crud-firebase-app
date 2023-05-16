@@ -1,10 +1,8 @@
 import {
   Box,
-  Checkbox,
   CircularProgress,
   Divider,
   Fab,
-  FormControlLabel,
   InputAdornment,
   TextField,
   Typography,
@@ -176,7 +174,7 @@ const Home = () => {
           <CircularProgress />
         )}
 
-        <Box>
+        <Box sx={{ mt: 2 }}>
           <Typography variant="h4" sx={{ mt: 2, mb: -1 }}>
             Nieograne gry
           </Typography>
