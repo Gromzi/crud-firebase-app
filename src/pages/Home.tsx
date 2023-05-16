@@ -1,9 +1,13 @@
 import {
   Box,
+  Checkbox,
   CircularProgress,
+  Divider,
   Fab,
+  FormControlLabel,
   InputAdornment,
   TextField,
+  Typography,
 } from '@mui/material'
 import { signOut } from 'firebase/auth'
 import { auth } from '../config/firebase'
@@ -53,7 +57,13 @@ const Home = () => {
     setSearchTerm(event.target.value)
   }
 
-  const [games, setGames] = useState<Game[] | null>(null)
+  const [finishedGames, setFinishedGames] = useState<Game[] | null>(
+    null
+  )
+  const [unfinishedGames, setUnfinishedGames] = useState<
+    Game[] | null
+  >(null)
+
   const gamesCollection = collection(db, 'games')
 
   useEffect(() => {
@@ -64,6 +74,13 @@ const Home = () => {
         gamesCollection,
         where('uid', '==', user?.uid)
       )
+
+      // if (showFinished) {
+      //   userGamesQuery = query(
+      //     gamesCollection,
+      //     where('finished', '==', true)
+      //   )
+      // }
 
       if (searchTerm && searchTerm.trim() !== '') {
         const searchTermLowercase = searchTerm.toLowerCase()
@@ -89,8 +106,18 @@ const Home = () => {
           finished: doc.data().finished,
           uid: doc.data().uid,
         }))
-        setGames(filteredData)
-        console.log('games state' + games)
+
+        const finishedGames: Game[] = filteredData.filter(
+          (game) => game.finished
+        )
+        const unfinishedGames: Game[] = filteredData.filter(
+          (game) => !game.finished
+        )
+
+        setFinishedGames(finishedGames)
+        setUnfinishedGames(unfinishedGames)
+
+        console.log('games state' + filteredData)
       } catch (e) {
         console.log(e)
       }
@@ -134,22 +161,46 @@ const Home = () => {
           }}
         />
 
-        {games ? (
-          <GamesList games={games} onRowClick={handleRowClick} />
+        <Box>
+          <Typography variant="h4" sx={{ mt: 2, mb: -1 }}>
+            Ograne gry
+          </Typography>
+          <Divider variant="fullWidth" sx={{ mt: 2 }} />
+        </Box>
+        {finishedGames ? (
+          <GamesList
+            games={finishedGames}
+            onRowClick={handleRowClick}
+          />
         ) : (
           <CircularProgress />
         )}
+
+        <Box>
+          <Typography variant="h4" sx={{ mt: 2, mb: -1 }}>
+            Nieograne gry
+          </Typography>
+          <Divider variant="fullWidth" sx={{ mt: 2 }} />
+        </Box>
+        {unfinishedGames ? (
+          <GamesList
+            games={unfinishedGames}
+            onRowClick={handleRowClick}
+          />
+        ) : (
+          <CircularProgress />
+        )}
+        <Box sx={{ mb: 5 }}></Box>
 
         <Box className="addGameButtonContainer">
           <Fab
             onClick={handleOpenModal}
             aria-label="add"
+            color="secondary"
             sx={{
-              borderRadius: '5px',
-              backgroundColor: '#1e1e1e',
-              color: 'white',
-              width: '95vw',
-              mt: 0.5,
+              position: 'fixed',
+              bottom: '12px',
+              right: '12px',
             }}
           >
             <AddIcon />

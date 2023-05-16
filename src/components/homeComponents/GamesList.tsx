@@ -24,6 +24,17 @@ const GamesList = ({ games, onRowClick }: GamesListProps) => {
     }
   }
 
+  // let finishedGames: Game[]
+  // let unfinishedGames: Game[]
+
+  // if (games !== undefined) {
+  //   games.forEach((game) => {
+  //     game.finished
+  //       ? finishedGames.push(game)
+  //       : unfinishedGames.push(game)
+  //   })
+  // }
+
   return (
     <TableContainer
       elevation={1}
