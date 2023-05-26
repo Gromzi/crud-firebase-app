@@ -148,6 +148,7 @@ const Home = () => {
           fullWidth
           value={searchTerm}
           onChange={handleSearchInputChange}
+          color="info"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start" sx={{ pr: 1 }}>
