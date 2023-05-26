@@ -20,6 +20,7 @@ import GamesModal from '../components/homeComponents/GamesModal'
 import UpperNavBar from '../components/homeComponents/UpperNavBar'
 import LogoutWarning from '../components/homeComponents/LogoutWarning'
 import SearchIcon from '@mui/icons-material/Search'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 const Home = () => {
   const { user } = useContext(UserContext)
@@ -62,6 +63,10 @@ const Home = () => {
     Game[] | null
   >(null)
 
+  const handleDragEnd = () => {
+    console.log('dragEnd')
+  }
+
   const gamesCollection = collection(db, 'games')
 
   useEffect(() => {
@@ -72,13 +77,6 @@ const Home = () => {
         gamesCollection,
         where('uid', '==', user?.uid)
       )
-
-      // if (showFinished) {
-      //   userGamesQuery = query(
-      //     gamesCollection,
-      //     where('finished', '==', true)
-      //   )
-      // }
 
       if (searchTerm && searchTerm.trim() !== '') {
         const searchTermLowercase = searchTerm.toLowerCase()
@@ -159,36 +157,40 @@ const Home = () => {
           }}
         />
 
-        <Box>
-          <Typography variant="h4" sx={{ mt: 2, mb: -1 }}>
-            Ograne gry
-          </Typography>
-          <Divider variant="fullWidth" sx={{ mt: 2 }} />
-        </Box>
-        {finishedGames ? (
-          <GamesList
-            games={finishedGames}
-            onRowClick={handleRowClick}
-          />
-        ) : (
-          <CircularProgress />
-        )}
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Box>
+            <Typography variant="h4" sx={{ mt: 2, mb: -1 }}>
+              Ograne gry
+            </Typography>
+            <Divider variant="fullWidth" sx={{ mt: 2 }} />
+          </Box>
+          {finishedGames ? (
+            <GamesList
+              games={finishedGames}
+              onRowClick={handleRowClick}
+              droppableId="finished-games"
+            />
+          ) : (
+            <CircularProgress />
+          )}
 
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="h4" sx={{ mt: 2, mb: -1 }}>
-            Nieograne gry
-          </Typography>
-          <Divider variant="fullWidth" sx={{ mt: 2 }} />
-        </Box>
-        {unfinishedGames ? (
-          <GamesList
-            games={unfinishedGames}
-            onRowClick={handleRowClick}
-          />
-        ) : (
-          <CircularProgress />
-        )}
-        <Box sx={{ mb: 5 }}></Box>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="h4" sx={{ mt: 2, mb: -1 }}>
+              Nieograne gry
+            </Typography>
+            <Divider variant="fullWidth" sx={{ mt: 2 }} />
+          </Box>
+          {unfinishedGames ? (
+            <GamesList
+              games={unfinishedGames}
+              onRowClick={handleRowClick}
+              droppableId="unfinished-games"
+            />
+          ) : (
+            <CircularProgress />
+          )}
+          <Box sx={{ mb: 5 }}></Box>
+        </DragDropContext>
 
         <Box className="addGameButtonContainer">
           <Fab
