@@ -22,7 +22,8 @@ interface ModalProps {
 }
 
 const GamesModal = ({ open, handleClose, game }: ModalProps) => {
-  const { register, handleSubmit, errors, setValue } = useModalForm()
+  const { register, handleSubmit, errors, setValue }: any =
+    useModalForm()
   const { createGame, updateGame, deleteGame } = useCrud()
   const { user } = useContext(UserContext)
 

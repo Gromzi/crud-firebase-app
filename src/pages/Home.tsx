@@ -20,7 +20,8 @@ import GamesModal from '../components/homeComponents/GamesModal'
 import UpperNavBar from '../components/homeComponents/UpperNavBar'
 import LogoutWarning from '../components/homeComponents/LogoutWarning'
 import SearchIcon from '@mui/icons-material/Search'
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
+import useCrud from '../hooks/useCrud'
 
 const Home = () => {
   const { user } = useContext(UserContext)
@@ -63,14 +64,82 @@ const Home = () => {
     Game[] | null
   >(null)
 
-  const handleDragEnd = () => {
-    console.log('dragEnd')
-  }
+  const { updateGame } = useCrud()
 
-  const gamesCollection = collection(db, 'games')
+  const handleDragEnd = (result: DropResult) => {
+    const { source, destination } = result
+
+    // If there is no destination or the destination is the same as the source, do nothing
+    if (
+      !destination ||
+      destination.droppableId === source.droppableId
+    ) {
+      console.log('Same destination or no destination')
+      return
+    }
+
+    // Retrieve the game that was dragged
+    let draggedGame: Game | null = null
+
+    if (source.droppableId === 'finished-games' && finishedGames) {
+      draggedGame = finishedGames[source.index]
+    } else if (
+      source.droppableId === 'unfinished-games' &&
+      unfinishedGames
+    ) {
+      draggedGame = unfinishedGames[source.index]
+    }
+
+    if (!draggedGame) {
+      return
+    }
+
+    // Update the 'finished' attribute of the dragged game
+    const updatedGame: Game = {
+      ...draggedGame,
+      finished: destination.droppableId === 'finished-games',
+    }
+    updateGame(updatedGame)
+
+    // Remove the dragged game from the source state
+    let updatedSourceGames: Game[] | null = null
+
+    if (source.droppableId === 'finished-games' && finishedGames) {
+      updatedSourceGames = [...finishedGames]
+      updatedSourceGames.splice(source.index, 1)
+    } else if (
+      source.droppableId === 'unfinished-games' &&
+      unfinishedGames
+    ) {
+      updatedSourceGames = [...unfinishedGames]
+      updatedSourceGames.splice(source.index, 1)
+    }
+
+    // Insert the updated game into the target state
+    const updatedTargetGames =
+      destination.droppableId === 'finished-games'
+        ? (finishedGames || []).concat(updatedGame)
+        : (unfinishedGames || []).concat(updatedGame)
+
+    // Update the corresponding state with the new games lists
+    setFinishedGames(updatedTargetGames)
+    setUnfinishedGames(updatedSourceGames)
+
+    // Refresh Home
+    setHomeKey(homeKey + 1)
+
+    console.log(
+      'dragged Game: ',
+      draggedGame?.title,
+      'updatedValue: ',
+      draggedGame!.finished
+    )
+  }
 
   useEffect(() => {
     console.log('useEffect z Home')
+
+    const gamesCollection = collection(db, 'games')
 
     const getGamesList = async () => {
       let userGamesQuery = query(
