@@ -6,7 +6,10 @@ const schema = yup.object().shape({
   release: yup
     .string()
     .required('Rok wydania jest wymagany')
-    .max(4, 'Podaj prawidłowy rok wydania'),
+    .matches(
+      /^(19[0-9][0-9]|20[0-2][0-9]|20[3-9][0-9]|2100)$/,
+      'Podaj prawidłowy rok wydania'
+    ),
   rating: yup
     .number()
     .nullable()
