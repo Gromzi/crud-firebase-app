@@ -266,7 +266,7 @@ const Home = () => {
           <Fab
             onClick={handleOpenModal}
             aria-label="add"
-            color="secondary"
+            color="success"
             sx={{
               position: 'fixed',
               bottom: '12px',
